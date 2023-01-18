@@ -1,0 +1,555 @@
+export type LinkedNfts = {
+  version: "0.1.0";
+  name: "mintlinks";
+  instructions: [
+    {
+      name: "createOrUpdateWalletInfoFromMintAccount";
+      accounts: [
+        {
+          name: "initializer";
+          isMut: true;
+          isSigner: true;
+        },
+        {
+          name: "mint";
+          isMut: false;
+          isSigner: false;
+        },
+        {
+          name: "associatedMintAddress";
+          isMut: false;
+          isSigner: false;
+        },
+        {
+          name: "previousWalletPdaAccount";
+          isMut: true;
+          isSigner: false;
+          isOptional: true;
+        },
+        {
+          name: "newWalletPdaAccount";
+          isMut: true;
+          isSigner: false;
+        },
+        {
+          name: "mintPdaAccount";
+          isMut: true;
+          isSigner: false;
+        },
+        {
+          name: "systemProgram";
+          isMut: false;
+          isSigner: false;
+        }
+      ];
+      args: [];
+    },
+    {
+      name: "removeWalletInfoFromMintAccount";
+      accounts: [
+        {
+          name: "initializer";
+          isMut: true;
+          isSigner: true;
+        },
+        {
+          name: "currentWalletPdaAccount";
+          isMut: true;
+          isSigner: false;
+        },
+        {
+          name: "mintPdaAccount";
+          isMut: true;
+          isSigner: false;
+        }
+      ];
+      args: [];
+    },
+    {
+      name: "addContentToMintAccount";
+      accounts: [
+        {
+          name: "initializer";
+          isMut: true;
+          isSigner: true;
+        },
+        {
+          name: "mintPdaAccount";
+          isMut: true;
+          isSigner: false;
+        },
+        {
+          name: "mintPdaDataAccount";
+          isMut: true;
+          isSigner: false;
+        },
+        {
+          name: "systemProgram";
+          isMut: false;
+          isSigner: false;
+        }
+      ];
+      args: [
+        {
+          name: "name";
+          type: "string";
+        },
+        {
+          name: "url";
+          type: "string";
+        }
+      ];
+    },
+    {
+      name: "removeContentFromMintAccount";
+      accounts: [
+        {
+          name: "initializer";
+          isMut: true;
+          isSigner: true;
+        },
+        {
+          name: "mintPdaAccount";
+          isMut: true;
+          isSigner: false;
+        },
+        {
+          name: "mintPdaDataAccount";
+          isMut: true;
+          isSigner: false;
+        }
+      ];
+      args: [
+        {
+          name: "keyToRemove";
+          type: "publicKey";
+        }
+      ];
+    },
+    {
+      name: "updateLinkedNftsOrderingFromWalletAccount";
+      accounts: [
+        {
+          name: "initializer";
+          isMut: true;
+          isSigner: true;
+        },
+        {
+          name: "currentWalletPdaAccount";
+          isMut: true;
+          isSigner: false;
+        }
+      ];
+      args: [
+        {
+          name: "linkedNfts";
+          type: {
+            vec: "publicKey";
+          };
+        }
+      ];
+    }
+  ];
+  accounts: [
+    {
+      name: "dataPdaState";
+      type: {
+        kind: "struct";
+        fields: [
+          {
+            name: "name";
+            type: "string";
+          },
+          {
+            name: "url";
+            type: "string";
+          }
+        ];
+      };
+    },
+    {
+      name: "mintPdaState";
+      type: {
+        kind: "struct";
+        fields: [
+          {
+            name: "isInitialized";
+            type: "bool";
+          },
+          {
+            name: "mintAddress";
+            type: "publicKey";
+          },
+          {
+            name: "linkedAddress";
+            type: {
+              option: "publicKey";
+            };
+          },
+          {
+            name: "linkedData";
+            type: {
+              vec: "publicKey";
+            };
+          }
+        ];
+      };
+    },
+    {
+      name: "walletPdaState";
+      type: {
+        kind: "struct";
+        fields: [
+          {
+            name: "owner";
+            type: "publicKey";
+          },
+          {
+            name: "linkedNfts";
+            type: {
+              vec: "publicKey";
+            };
+          }
+        ];
+      };
+    }
+  ];
+  errors: [
+    {
+      code: 6000;
+      name: "MintDoesNotMatch";
+      msg: "Associated mint account is not from the given mint";
+    },
+    {
+      code: 6001;
+      name: "InitializerNotOwnerOfMint";
+      msg: "There is a mismatch between given mint owner and initializer pub key";
+    },
+    {
+      code: 6002;
+      name: "InitializerNotOwnerOfWallet";
+      msg: "There is a mismatch between given wallet and initializer pub key";
+    },
+    {
+      code: 6003;
+      name: "NumberOfNFTExceededOverallAlloowableAmount";
+      msg: "A maximum of 6 nft has already been linked to the wallet";
+    },
+    {
+      code: 6004;
+      name: "PreviousAccountInfoMissing";
+      msg: "Previous account info is missing";
+    },
+    {
+      code: 6005;
+      name: "AlreadyLinkedWithGivenWallet";
+      msg: "Current NFT is already linked with given wallet address";
+    },
+    {
+      code: 6006;
+      name: "PreviousAccountInfoDoesNotMatch";
+      msg: "Previous account does not match existing mint account";
+    },
+    {
+      code: 6007;
+      name: "MintPdaAccountNotYetInitialized";
+      msg: "Mint PDA Account have not been initialized, previous_wallet_pda_account field should be none";
+    },
+    {
+      code: 6008;
+      name: "DataDoesNotExist";
+      msg: "No such data exist";
+    },
+    {
+      code: 6009;
+      name: "UnauthorisedRemovalOfData";
+      msg: "You're not authorised to remove the data";
+    },
+    {
+      code: 6010;
+      name: "NumberOfCharactersHasExceededAllowableLimit";
+      msg: "A maximum limit of 1000 characters has exceeded";
+    }
+  ];
+  metadata: {
+    address: "Eh55wpsz1Riyk3inCxLj1KxnxptmGE4gFd7rFQXrkpGd";
+  };
+};
+
+export const IDL: LinkedNfts = {
+  version: "0.1.0",
+  name: "mintlinks",
+  instructions: [
+    {
+      name: "createOrUpdateWalletInfoFromMintAccount",
+      accounts: [
+        {
+          name: "initializer",
+          isMut: true,
+          isSigner: true,
+        },
+        {
+          name: "mint",
+          isMut: false,
+          isSigner: false,
+        },
+        {
+          name: "associatedMintAddress",
+          isMut: false,
+          isSigner: false,
+        },
+        {
+          name: "previousWalletPdaAccount",
+          isMut: true,
+          isSigner: false,
+          isOptional: true,
+        },
+        {
+          name: "newWalletPdaAccount",
+          isMut: true,
+          isSigner: false,
+        },
+        {
+          name: "mintPdaAccount",
+          isMut: true,
+          isSigner: false,
+        },
+        {
+          name: "systemProgram",
+          isMut: false,
+          isSigner: false,
+        },
+      ],
+      args: [],
+    },
+    {
+      name: "removeWalletInfoFromMintAccount",
+      accounts: [
+        {
+          name: "initializer",
+          isMut: true,
+          isSigner: true,
+        },
+        {
+          name: "currentWalletPdaAccount",
+          isMut: true,
+          isSigner: false,
+        },
+        {
+          name: "mintPdaAccount",
+          isMut: true,
+          isSigner: false,
+        },
+      ],
+      args: [],
+    },
+    {
+      name: "addContentToMintAccount",
+      accounts: [
+        {
+          name: "initializer",
+          isMut: true,
+          isSigner: true,
+        },
+        {
+          name: "mintPdaAccount",
+          isMut: true,
+          isSigner: false,
+        },
+        {
+          name: "mintPdaDataAccount",
+          isMut: true,
+          isSigner: false,
+        },
+        {
+          name: "systemProgram",
+          isMut: false,
+          isSigner: false,
+        },
+      ],
+      args: [
+        {
+          name: "name",
+          type: "string",
+        },
+        {
+          name: "url",
+          type: "string",
+        },
+      ],
+    },
+    {
+      name: "removeContentFromMintAccount",
+      accounts: [
+        {
+          name: "initializer",
+          isMut: true,
+          isSigner: true,
+        },
+        {
+          name: "mintPdaAccount",
+          isMut: true,
+          isSigner: false,
+        },
+        {
+          name: "mintPdaDataAccount",
+          isMut: true,
+          isSigner: false,
+        },
+      ],
+      args: [
+        {
+          name: "keyToRemove",
+          type: "publicKey",
+        },
+      ],
+    },
+    {
+      name: "updateLinkedNftsOrderingFromWalletAccount",
+      accounts: [
+        {
+          name: "initializer",
+          isMut: true,
+          isSigner: true,
+        },
+        {
+          name: "currentWalletPdaAccount",
+          isMut: true,
+          isSigner: false,
+        },
+      ],
+      args: [
+        {
+          name: "linkedNfts",
+          type: {
+            vec: "publicKey",
+          },
+        },
+      ],
+    },
+  ],
+  accounts: [
+    {
+      name: "dataPdaState",
+      type: {
+        kind: "struct",
+        fields: [
+          {
+            name: "name",
+            type: "string",
+          },
+          {
+            name: "url",
+            type: "string",
+          },
+        ],
+      },
+    },
+    {
+      name: "mintPdaState",
+      type: {
+        kind: "struct",
+        fields: [
+          {
+            name: "isInitialized",
+            type: "bool",
+          },
+          {
+            name: "mintAddress",
+            type: "publicKey",
+          },
+          {
+            name: "linkedAddress",
+            type: {
+              option: "publicKey",
+            },
+          },
+          {
+            name: "linkedData",
+            type: {
+              vec: "publicKey",
+            },
+          },
+        ],
+      },
+    },
+    {
+      name: "walletPdaState",
+      type: {
+        kind: "struct",
+        fields: [
+          {
+            name: "owner",
+            type: "publicKey",
+          },
+          {
+            name: "linkedNfts",
+            type: {
+              vec: "publicKey",
+            },
+          },
+        ],
+      },
+    },
+  ],
+  errors: [
+    {
+      code: 6000,
+      name: "MintDoesNotMatch",
+      msg: "Associated mint account is not from the given mint",
+    },
+    {
+      code: 6001,
+      name: "InitializerNotOwnerOfMint",
+      msg: "There is a mismatch between given mint owner and initializer pub key",
+    },
+    {
+      code: 6002,
+      name: "InitializerNotOwnerOfWallet",
+      msg: "There is a mismatch between given wallet and initializer pub key",
+    },
+    {
+      code: 6003,
+      name: "NumberOfNFTExceededOverallAlloowableAmount",
+      msg: "A maximum of 6 nft has already been linked to the wallet",
+    },
+    {
+      code: 6004,
+      name: "PreviousAccountInfoMissing",
+      msg: "Previous account info is missing",
+    },
+    {
+      code: 6005,
+      name: "AlreadyLinkedWithGivenWallet",
+      msg: "Current NFT is already linked with given wallet address",
+    },
+    {
+      code: 6006,
+      name: "PreviousAccountInfoDoesNotMatch",
+      msg: "Previous account does not match existing mint account",
+    },
+    {
+      code: 6007,
+      name: "MintPdaAccountNotYetInitialized",
+      msg: "Mint PDA Account have not been initialized, previous_wallet_pda_account field should be none",
+    },
+    {
+      code: 6008,
+      name: "DataDoesNotExist",
+      msg: "No such data exist",
+    },
+    {
+      code: 6009,
+      name: "UnauthorisedRemovalOfData",
+      msg: "You're not authorised to remove the data",
+    },
+    {
+      code: 6010,
+      name: "NumberOfCharactersHasExceededAllowableLimit",
+      msg: "A maximum limit of 1000 characters has exceeded",
+    },
+  ],
+  metadata: {
+    address: "Eh55wpsz1Riyk3inCxLj1KxnxptmGE4gFd7rFQXrkpGd",
+  },
+};
