@@ -9,7 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@headlessui/react": "^1.7.7",
+    "@headlessui/react": "^0.0.0-insiders.676de16",
     "@metaplex-foundation/js": "^0.17.12",
     "@next/font": "13.1.1",
     "@solana/wallet-adapter-base": "^0.9.20",

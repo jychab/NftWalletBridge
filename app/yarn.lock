@@ -443,10 +443,10 @@
   resolved "https://registry.yarnpkg.com/@hapi/bourne/-/bourne-2.1.0.tgz#66aff77094dc3080bd5df44ec63881f2676eb020"
   integrity sha512-i1BpaNDVLJdRBEKeJWkVO6tYX6DMFBuwMhSuWqLsY4ufeTKGVuV5rBsUhxPayXqnnWHgXUAmWK16H/ykO5Wj4Q==
 
-"@headlessui/react@^1.7.7":
-  version "1.7.7"
-  resolved "https://registry.yarnpkg.com/@headlessui/react/-/react-1.7.7.tgz#d6f8708d8943ae8ebb1a6929108234e4515ac7e8"
-  integrity sha512-BqDOd/tB9u2tA0T3Z0fn18ktw+KbVwMnkxxsGPIH2hzssrQhKB5n/6StZOyvLYP/FsYtvuXfi9I0YowKPv2c1w==
+"@headlessui/react@^0.0.0-insiders.676de16":
+  version "0.0.0-insiders.676de16"
+  resolved "https://registry.yarnpkg.com/@headlessui/react/-/react-0.0.0-insiders.676de16.tgz#a18ed67d457a1b5e7d11a4ff2a8063c87fd6daf7"
+  integrity sha512-BYhcfGBllkmgtJ7MMCwzwSyC156boK01IsxrtGPrL8UZXb09v7wUAeXAOFScHucxbOJ8zY8ScI8DheqIx0fNTw==
   dependencies:
     client-only "^0.0.1"
 

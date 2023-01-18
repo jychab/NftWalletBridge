@@ -3,7 +3,7 @@ import { AnchorWallet } from "@solana/wallet-adapter-react";
 import { PublicKey, Connection } from "@solana/web3.js";
 import { NftWalletBridge } from "../idl/nftwalletbridge";
 import * as Idl from "../idl/nftwalletbridge.json";
-import { getOrCreateATA } from "./getOrCreateATA";
+import getOrCreateATA from "./getOrCreateATA";
 
 export default async function addOrUpdateNftLinksToWallet(
   wallet: AnchorWallet,

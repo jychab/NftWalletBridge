@@ -3,7 +3,7 @@ import { AnchorWallet } from "@solana/wallet-adapter-react";
 import { PublicKey, Connection } from "@solana/web3.js";
 import { NftWalletBridge } from "../idl/nftwalletbridge";
 import * as Idl from "../idl/nftwalletbridge.json";
-import { removeDataInLinkedNft } from "./removeDataInLinkedNft";
+import removeDataInLinkedNft from "./removeDataInLinkedNft";
 
 export default async function addOrUpdateDataInLinkedNft(
   name: string,

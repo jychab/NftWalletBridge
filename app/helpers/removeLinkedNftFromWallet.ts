@@ -2,7 +2,7 @@ import * as anchor from "@project-serum/anchor";
 import { NftWalletBridge } from "../idl/nftwalletbridge";
 import * as Idl from "../idl/nftwalletbridge.json";
 
-export async function removeLinkedNftFromWallet(
+export default async function removeLinkedNftFromWallet(
   nft: anchor.web3.PublicKey,
   wallet: any,
   connection: any

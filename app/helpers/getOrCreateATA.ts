@@ -2,7 +2,7 @@ import * as anchor from "@project-serum/anchor";
 import { AnchorWallet } from "@solana/wallet-adapter-react";
 import * as spl from "@solana/spl-token";
 
-export async function getOrCreateATA(
+export default async function getOrCreateATA(
   connection: anchor.web3.Connection,
   nftMintKey: anchor.web3.PublicKey,
   wallet: AnchorWallet

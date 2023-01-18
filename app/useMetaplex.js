@@ -5,6 +5,6 @@ const DEFAULT_CONTEXT = {
 
 export const MetaplexContext = createContext(DEFAULT_CONTEXT);
 
-export function useMetaplex() {
+export default function useMetaplex() {
   return useContext(MetaplexContext);
 }

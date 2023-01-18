@@ -2,9 +2,9 @@ import { useState, useEffect } from "react";
 import { AnchorWallet } from "@solana/wallet-adapter-react";
 import Image from "next/image";
 import { Connection, PublicKey } from "@solana/web3.js";
-import { removeLinkedNftFromWallet } from "../helpers/removeLinkedNftFromWallet";
+import removeLinkedNftFromWallet from "../../helpers/removeLinkedNftFromWallet";
 import PropertiesDropDownBox from "./PropertiesDropDownBox";
-import { fetchDataFromLinkedNft } from "../helpers/fetchDataFromLinkedNft";
+import fetchDataFromLinkedNft from "../../helpers/fetchDataFromLinkedNft";
 import SetNftDataPanel from "./SetNftDataPanel";
 
 export default function PropertiesPanel(props: {
@@ -98,16 +98,20 @@ export default function PropertiesPanel(props: {
       </div>
       <div className="md:flex flex-row space-x-4">
         <div className="flex flex-col md:w-1/3">
-          <Image
-            height={100}
-            width={100}
-            src={props.propertiesProps.url}
-            alt={props.propertiesProps.name}
-            className="inset-0 h-full w-full object-contain object-center rounded hover:opacity-100"
-          />
-          <div className="text-center text-black">
-            {props.propertiesProps.name}
-          </div>
+          {props.propertiesProps && (
+            <>
+              <Image
+                height={100}
+                width={100}
+                src={props.propertiesProps.url}
+                alt={props.propertiesProps.name}
+                className="inset-0 h-full w-full object-contain object-center rounded hover:opacity-100"
+              />
+              <div className="text-center text-black">
+                {props.propertiesProps.name}
+              </div>
+            </>
+          )}
         </div>
         {currentProperties != null ? (
           <div className="md:w-2/3 text-black text-xs whitespace-normal break-all">

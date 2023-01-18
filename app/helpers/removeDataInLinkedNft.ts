@@ -3,7 +3,7 @@ import * as Idl from "../idl/nftwalletbridge.json";
 import { AnchorWallet } from "@solana/wallet-adapter-react";
 import { NftWalletBridge } from "../idl/nftwalletbridge";
 
-export async function removeDataInLinkedNft(
+export default async function removeDataInLinkedNft(
   wallet: AnchorWallet,
   mintPdaAccount: anchor.web3.PublicKey,
   mintPdaDataAccount: anchor.web3.PublicKey,
