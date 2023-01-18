@@ -12,6 +12,8 @@
     "@headlessui/react": "^0.0.0-insiders.676de16",
     "@metaplex-foundation/js": "^0.17.12",
     "@next/font": "13.1.1",
+    "@project-serum/anchor": "^0.26.0",
+    "@solana/spl-token": "^0.3.7",
     "@solana/wallet-adapter-base": "^0.9.20",
     "@solana/wallet-adapter-react": "^0.15.28",
     "@solana/wallet-adapter-react-ui": "^0.9.27",
