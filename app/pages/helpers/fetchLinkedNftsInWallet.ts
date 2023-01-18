@@ -1,9 +1,8 @@
 import * as anchor from "@project-serum/anchor";
 import { AnchorWallet } from "@solana/wallet-adapter-react";
 import { Nft } from "@metaplex-foundation/js";
-import * as Idl from "../idl/linkedNfts.json";
-import { LinkedNfts } from "../idl/linkedNfts";
-import { removeLinkedNftFromWallet } from "./removeLinkedNftFromWallet";
+import * as Idl from "../idl/nftwalletbridge.json";
+import { NftWalletBridge } from "../idl/nftwalletbridge";
 
 export default async function fetchLinkedNftsInWallet(
   setNfts: (arg0: Array<Nft | null>) => void,
@@ -14,8 +13,8 @@ export default async function fetchLinkedNftsInWallet(
   let nftData: Array<Nft | null> = [null, null, null, null, null, null];
   try {
     if (wallet != null && metaplex != null) {
-      const program = new anchor.Program<LinkedNfts>(
-        Idl as LinkedNfts,
+      const program = new anchor.Program<NftWalletBridge>(
+        Idl as NftWalletBridge,
         new anchor.web3.PublicKey(process.env.NEXT_PUBLIC_PROGRAM_ID!),
         new anchor.AnchorProvider(
           connection,

@@ -1,14 +1,14 @@
 import * as anchor from "@project-serum/anchor";
-import { LinkedNfts } from "../idl/linkedNfts";
-import * as Idl from "../idl/linkedNfts.json";
+import { NftWalletBridge } from "../idl/nftwalletbridge";
+import * as Idl from "../idl/nftwalletbridge.json";
 
 export async function removeLinkedNftFromWallet(
   nft: anchor.web3.PublicKey,
   wallet: any,
   connection: any
 ) {
-  const program = new anchor.Program<LinkedNfts>(
-    Idl as LinkedNfts,
+  const program = new anchor.Program<NftWalletBridge>(
+    Idl as NftWalletBridge,
     new anchor.web3.PublicKey(process.env.NEXT_PUBLIC_PROGRAM_ID!),
     new anchor.AnchorProvider(
       connection,

@@ -1,7 +1,7 @@
 import * as anchor from "@project-serum/anchor";
-import * as Idl from "../idl/linkedNfts.json";
+import * as Idl from "../idl/nftwalletbridge.json";
 import { AnchorWallet } from "@solana/wallet-adapter-react";
-import { LinkedNfts } from "../idl/linkedNfts";
+import { NftWalletBridge } from "../idl/nftwalletbridge";
 
 export async function removeDataInLinkedNft(
   wallet: AnchorWallet,
@@ -9,8 +9,8 @@ export async function removeDataInLinkedNft(
   mintPdaDataAccount: anchor.web3.PublicKey,
   connection: anchor.web3.Connection
 ) {
-  const program = new anchor.Program<LinkedNfts>(
-    Idl as LinkedNfts,
+  const program = new anchor.Program<NftWalletBridge>(
+    Idl as NftWalletBridge,
     new anchor.web3.PublicKey(process.env.NEXT_PUBLIC_PROGRAM_ID!),
     new anchor.AnchorProvider(
       connection,

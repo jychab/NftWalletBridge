@@ -12,22 +12,7 @@ export default function SetNftDataPanel(props: {
   const [name, setName] = useState<string>("");
   const [url, setUrl] = useState<string>("");
   return (
-    <form
-      onSubmit={async () => {
-        const tx = await addOrUpdateDataInLinkedNft(
-          name,
-          url,
-          props.wallet,
-          props.connection,
-          props.propertiesProps.address
-        );
-        if (tx) {
-          console.log("Data is linked to nft:", tx);
-          props.callback(true);
-        }
-      }}
-      className="w-full max-w-xs"
-    >
+    <div className="w-full max-w-xs">
       <div className="md:flex md:items-center mb-6">
         <div className="md:w-1/3">
           <label
@@ -80,11 +65,24 @@ export default function SetNftDataPanel(props: {
           <button
             className="shadow bg-purple-500 hover:bg-purple-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded"
             type="submit"
+            onClick={async () => {
+              const tx = await addOrUpdateDataInLinkedNft(
+                name,
+                url,
+                props.wallet,
+                props.connection,
+                props.propertiesProps.address
+              );
+              if (tx) {
+                console.log("Data is linked to nft:", tx);
+                props.callback(true);
+              }
+            }}
           >
             Submit
           </button>
         </div>
       </div>
-    </form>
+    </div>
   );
 }

@@ -1,6 +1,6 @@
-export type LinkedNfts = {
+export type NftWalletBridge = {
   version: "0.1.0";
-  name: "mintlinks";
+  name: "nftwalletbridge";
   instructions: [
     {
       name: "createOrUpdateWalletInfoFromMintAccount";
@@ -272,13 +272,13 @@ export type LinkedNfts = {
     }
   ];
   metadata: {
-    address: "Eh55wpsz1Riyk3inCxLj1KxnxptmGE4gFd7rFQXrkpGd";
+    address: "CcyvqjwZWKsQuLXjdKsx3BA7BqnAKonrXdZVMDPy7pXG";
   };
 };
 
-export const IDL: LinkedNfts = {
+export const IDL: NftWalletBridge = {
   version: "0.1.0",
-  name: "mintlinks",
+  name: "nftwalletbridge",
   instructions: [
     {
       name: "createOrUpdateWalletInfoFromMintAccount",
@@ -550,6 +550,6 @@ export const IDL: LinkedNfts = {
     },
   ],
   metadata: {
-    address: "Eh55wpsz1Riyk3inCxLj1KxnxptmGE4gFd7rFQXrkpGd",
+    address: "CcyvqjwZWKsQuLXjdKsx3BA7BqnAKonrXdZVMDPy7pXG",
   },
 };

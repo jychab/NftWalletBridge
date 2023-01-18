@@ -1,8 +1,8 @@
 import * as anchor from "@project-serum/anchor";
 import { AnchorWallet } from "@solana/wallet-adapter-react";
 import { PublicKey, Connection } from "@solana/web3.js";
-import { LinkedNfts } from "../idl/linkedNfts";
-import * as Idl from "../idl/linkedNfts.json";
+import { NftWalletBridge } from "../idl/nftwalletbridge";
+import * as Idl from "../idl/nftwalletbridge.json";
 import { getOrCreateATA } from "./getOrCreateATA";
 
 export default async function addOrUpdateNftLinksToWallet(
@@ -10,8 +10,8 @@ export default async function addOrUpdateNftLinksToWallet(
   connection: Connection,
   nftMintKey: PublicKey
 ) {
-  const program = new anchor.Program<LinkedNfts>(
-    Idl as LinkedNfts,
+  const program = new anchor.Program<NftWalletBridge>(
+    Idl as NftWalletBridge,
     new anchor.web3.PublicKey(process.env.NEXT_PUBLIC_PROGRAM_ID!),
     new anchor.AnchorProvider(
       connection,
