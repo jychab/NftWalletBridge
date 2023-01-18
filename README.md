@@ -30,3 +30,7 @@ With this, DApps can fetch the linked NFTs for a particular wallet then add an o
 Note that the PDA data is tied to the NFT and not the burner wallet.
 
 When a new wallet initiates a link with the NFT, the link to the NFT data will be removed from the previous wallet and transfered to the new wallet.
+
+# DEMO APP
+
+A demo app configured for devnet is available at https://nft-wallet-bridge.vercel.app/
