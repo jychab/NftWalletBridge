@@ -37,6 +37,7 @@ export default async function handler(
     console.log(body);
     body.forEach((data) => {
       let result = parsedDiceDuelData(data);
+      console.log(result);
       if (
         result.state == "Game Completed!" &&
         result.escrowAccount.length == 2
