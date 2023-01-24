@@ -2,7 +2,7 @@
 import axios from "axios";
 import axiosRetry from "axios-retry";
 import { NextApiRequest, NextApiResponse } from "next";
-import { RawData } from "../../data/helius/types";
+import { RawData, RawTransaction } from "../../data/helius/types";
 import { parsedDiceDuelData } from "../../helpers/backend/parsedDiceDuelData";
 import { getEnrichedTransactions } from "../../helpers/backend/getEnrichedTransactions";
 import fetchLinkedNftsInWallet from "../../helpers/backend/fetchLinkedNftsInWallet";
@@ -33,37 +33,37 @@ export default async function handler(
   res: NextApiResponse
 ) {
   if (req.method == "POST") {
-    let body = req.body as [RawData];
+    let body = req.body as [RawTransaction];
     console.log(body);
     body.forEach((data) => {
-      let result = parsedDiceDuelData(data);
-      console.log(result);
-      if (
-        result.state == "Game Completed!" &&
-        result.escrowAccount.length == 2
-      ) {
-        const winner = result.feePayer;
-        result.escrowAccount.forEach(async (account) => {
-          const url = `${apiURL}/${account}/${resource}${options}`;
-          const transactions = (await (await fetch(url)).json()) as [RawData]; // get fee payer from the escrow account
-          console.log(transactions);
-          if (transactions != undefined && transactions.length > 0) {
-            const loser = transactions[0].feePayer;
-            if (loser != undefined && loser != winner) {
-              console.log(loser);
-              await updateResultToMainLinkedNFTInWallet(
-                loser,
-                -result.winnings
-              );
-              console.log(winner);
-              await updateResultToMainLinkedNFTInWallet(
-                winner,
-                result.winnings - result.feeCollected
-              );
-            }
-          }
-        });
-      }
+      // let result = parsedDiceDuelData(data);
+      console.log(data.meta.logMessages);
+      // if (
+      //   result.state == "Game Completed!" &&
+      //   result.escrowAccount.length == 2
+      // ) {
+      //   const winner = result.feePayer;
+      //   result.escrowAccount.forEach(async (account) => {
+      //     const url = `${apiURL}/${account}/${resource}${options}`;
+      //     const transactions = (await (await fetch(url)).json()) as [RawData]; // get fee payer from the escrow account
+      //     console.log(transactions);
+      //     if (transactions != undefined && transactions.length > 0) {
+      //       const loser = transactions[0].feePayer;
+      //       if (loser != undefined && loser != winner) {
+      //         console.log(loser);
+      //         await updateResultToMainLinkedNFTInWallet(
+      //           loser,
+      //           -result.winnings
+      //         );
+      //         console.log(winner);
+      //         await updateResultToMainLinkedNFTInWallet(
+      //           winner,
+      //           result.winnings - result.feeCollected
+      //         );
+      //       }
+      //     }
+      //   });
+      // }
     });
     res.status(200).send("Success");
   } else if (req.method == "GET") {
