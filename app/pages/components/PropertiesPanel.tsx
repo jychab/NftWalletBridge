@@ -2,9 +2,9 @@ import { useState, useEffect } from "react";
 import { AnchorWallet } from "@solana/wallet-adapter-react";
 import Image from "next/image";
 import { Connection, PublicKey } from "@solana/web3.js";
-import removeLinkedNftFromWallet from "../../helpers/removeLinkedNftFromWallet";
+import removeLinkedNftFromWallet from "../../helpers/client/removeLinkedNftFromWallet";
 import PropertiesDropDownBox from "./PropertiesDropDownBox";
-import fetchDataFromLinkedNft from "../../helpers/fetchDataFromLinkedNft";
+import fetchDataFromLinkedNft from "../../helpers/client/fetchDataFromLinkedNft";
 import SetNftDataPanel from "./SetNftDataPanel";
 
 export default function PropertiesPanel(props: {

@@ -4,7 +4,7 @@ import { type Connection } from "@solana/web3.js";
 import { Nft } from "@metaplex-foundation/js";
 import { Menu } from "@headlessui/react";
 import NFTItem from "./NFTItem";
-import addOrUpdateNftLinksToWallet from "../../helpers/addOrUpdateNftLinksToWallet";
+import addOrUpdateNftLinksToWallet from "../../helpers/client/addOrUpdateNftLinksToWallet";
 
 export default function PlaceHolder(props: {
   nftsInWallet: Array<Nft>;

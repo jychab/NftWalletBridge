@@ -1,8 +1,8 @@
 import * as anchor from "@project-serum/anchor";
 import { AnchorWallet } from "@solana/wallet-adapter-react";
 import { Nft } from "@metaplex-foundation/js";
-import * as Idl from "../idl/nftwalletbridge.json";
-import { NftWalletBridge } from "../idl/nftwalletbridge";
+import * as Idl from "../../data/idl/nftwalletbridge.json";
+import { NftWalletBridge } from "../../data/idl/nftwalletbridge";
 
 export default async function fetchLinkedNftsInWallet(
   setNfts: (arg0: Array<Nft | null>) => void,

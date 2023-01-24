@@ -1,6 +1,6 @@
 import * as anchor from "@project-serum/anchor";
-import { NftWalletBridge } from "../idl/nftwalletbridge";
-import * as Idl from "../idl/nftwalletbridge.json";
+import { NftWalletBridge } from "../../data/idl/nftwalletbridge";
+import * as Idl from "../../data/idl/nftwalletbridge.json";
 
 export default async function fetchDataFromLinkedNft(
   nftMintAddress: anchor.web3.PublicKey,

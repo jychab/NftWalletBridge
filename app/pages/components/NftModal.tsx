@@ -4,10 +4,10 @@ import { Nft } from "@metaplex-foundation/js";
 import { useConnection, useAnchorWallet } from "@solana/wallet-adapter-react";
 import { PublicKey } from "@solana/web3.js";
 import useMetaplex from "../../useMetaplex";
-import fetchLinkedNftsInWallet from "../../helpers/fetchLinkedNftsInWallet";
+import fetchLinkedNftsInWallet from "../../helpers/client/fetchLinkedNftsInWallet";
 import NFTItem from "./NFTItem";
 import PlaceHolder from "./PlaceHolder";
-import fetchAllNftsInWallet from "../../helpers/fetchAllNftsInWallet";
+import fetchAllNftsInWallet from "../../helpers/client/fetchAllNftsInWallet";
 import PropertiesPanel from "./PropertiesPanel";
 import NFTItemMain from "./NFTItemMain";
 

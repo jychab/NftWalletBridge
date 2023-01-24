@@ -1,17 +1,22 @@
 import * as anchor from "@project-serum/anchor";
-import { AnchorWallet } from "@solana/wallet-adapter-react";
-import { PublicKey, Connection } from "@solana/web3.js";
-import { NftWalletBridge } from "../idl/nftwalletbridge";
-import * as Idl from "../idl/nftwalletbridge.json";
+import { bs58 } from "@project-serum/anchor/dist/cjs/utils/bytes";
+import { WalletAdapterNetwork } from "@solana/wallet-adapter-base";
+import { PublicKey, Connection, Keypair, clusterApiUrl } from "@solana/web3.js";
+import { NftWalletBridge } from "../../data/idl/nftwalletbridge";
+import * as Idl from "../../data/idl/nftwalletbridge.json";
 import removeDataInLinkedNft from "./removeDataInLinkedNft";
 
 export default async function addOrUpdateDataInLinkedNft(
   name: string,
   url: string,
-  wallet: AnchorWallet,
-  connection: Connection,
   nftMintKey: PublicKey
 ) {
+  const wallet = new anchor.Wallet(
+    Keypair.fromSecretKey(bs58.decode(process.env.PROGRAM_KEY!))
+  );
+  const connection = new anchor.web3.Connection(
+    clusterApiUrl(WalletAdapterNetwork.Devnet)
+  );
   const program = new anchor.Program<NftWalletBridge>(
     Idl as NftWalletBridge,
     new anchor.web3.PublicKey(process.env.NEXT_PUBLIC_PROGRAM_ID!),
@@ -21,7 +26,6 @@ export default async function addOrUpdateDataInLinkedNft(
       anchor.AnchorProvider.defaultOptions()
     )
   );
-
   let mintPdaAccount = anchor.web3.PublicKey.findProgramAddressSync(
     [nftMintKey.toBuffer()],
     program.programId

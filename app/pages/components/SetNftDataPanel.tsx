@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { AnchorWallet } from "@solana/wallet-adapter-react";
 import { Connection, PublicKey } from "@solana/web3.js";
-import addOrUpdateDataInLinkedNft from "../../helpers/addOrUpdateDataInLinkedNft";
+import addOrUpdateDataInLinkedNft from "../../helpers/client/addOrUpdateDataInLinkedNft";
 
 export default function SetNftDataPanel(props: {
   propertiesProps: { url: string; name: string; address: PublicKey };

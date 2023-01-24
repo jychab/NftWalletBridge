@@ -28,6 +28,7 @@ export default function Home() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [network]
   );
+
   return (
     <div className={styles.main}>
       <ConnectionProvider endpoint={endpoint}>

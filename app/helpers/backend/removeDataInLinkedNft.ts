@@ -1,7 +1,7 @@
 import * as anchor from "@project-serum/anchor";
-import * as Idl from "../idl/nftwalletbridge.json";
+import * as Idl from "../../data/idl/nftwalletbridge.json";
 import { AnchorWallet } from "@solana/wallet-adapter-react";
-import { NftWalletBridge } from "../idl/nftwalletbridge";
+import { NftWalletBridge } from "../../data/idl/nftwalletbridge";
 
 export default async function removeDataInLinkedNft(
   wallet: AnchorWallet,
