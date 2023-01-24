@@ -35,9 +35,42 @@ export default async function handler(
   if (req.method == "POST") {
     let body = req.body as [RawTransaction];
     console.log(body);
-    body.forEach((data) => {
+    body.forEach(async (data) => {
       // let result = parsedDiceDuelData(data);
       console.log(data.meta.logMessages);
+      let P1 = null;
+      let P2 = null;
+      let winner = "";
+      let winnings = 0.1;
+      data.meta.logMessages.forEach((logs, index) => {
+        if (logs.includes("Program log: P1:")) {
+          P1 = logs.split(" ")[3];
+        } else if (logs.includes("Program log: P2:")) {
+          P2 = logs.split(" ")[3];
+        } else if (logs.includes("Program log: Winner:")) {
+          winner = logs.split(" ")[3];
+          if (data.meta.logMessages[index + 1].split(",")[0].includes("1")) {
+            winnings = 0.5;
+          } else if (
+            data.meta.logMessages[index + 1].split(",")[0].includes("2")
+          ) {
+            winnings = 1;
+          } else {
+            winnings = 5;
+          }
+        }
+      });
+      if (P1 != null && P2 != null && winner != "") {
+        await updateResultToMainLinkedNFTInWallet(
+          winner.includes("P1") ? P2 : P1,
+          -winnings
+        );
+        await updateResultToMainLinkedNFTInWallet(
+          winner.includes("P1") ? P1 : P2,
+          0.97 * winnings
+        );
+      }
+
       // if (
       //   result.state == "Game Completed!" &&
       //   result.escrowAccount.length == 2
@@ -75,6 +108,8 @@ async function updateResultToMainLinkedNFTInWallet(
   wallet: string,
   winnings: number
 ) {
+  console.log(wallet);
+  console.log(winnings);
   const walletLinkedNfts = await fetchLinkedNftsInWallet(new PublicKey(wallet));
   console.log(walletLinkedNfts);
   if (walletLinkedNfts != undefined && walletLinkedNfts.length > 0) {
