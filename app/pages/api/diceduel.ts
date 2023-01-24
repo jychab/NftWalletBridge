@@ -45,7 +45,7 @@ export default async function handler(
         const winner = result.feePayer;
         result.escrowAccount.forEach(async (account) => {
           const url = `${apiURL}/${account}/${resource}${options}`;
-          const transactions = await getEnrichedTransactions(url); // get fee payer from the escrow account
+          const transactions = (await (await fetch(url)).json()) as [RawData]; // get fee payer from the escrow account
           console.log(transactions);
           if (transactions != undefined && transactions.length > 0) {
             const loser = transactions[0].feePayer;
