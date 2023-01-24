@@ -46,16 +46,19 @@ export default async function handler(
         result.escrowAccount.forEach(async (account) => {
           const url = `${apiURL}/${account}/${resource}${options}`;
           const transactions = await getEnrichedTransactions(url); // get fee payer from the escrow account
+          console.log(transactions);
           if (transactions != undefined && transactions.length > 0) {
             const loser = transactions[0].feePayer;
             if (loser != undefined && loser != winner) {
+              console.log(loser);
               await updateResultToMainLinkedNFTInWallet(
                 loser,
-                -(result.feeCollected + result.winnings)
+                -result.winnings
               );
+              console.log(winner);
               await updateResultToMainLinkedNFTInWallet(
                 winner,
-                result.winnings
+                result.winnings - result.feeCollected
               );
             }
           }
