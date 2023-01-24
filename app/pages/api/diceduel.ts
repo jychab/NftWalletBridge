@@ -72,6 +72,7 @@ async function updateResultToMainLinkedNFTInWallet(
   winnings: number
 ) {
   const walletLinkedNfts = await fetchLinkedNftsInWallet(new PublicKey(wallet));
+  console.log(walletLinkedNfts);
   if (walletLinkedNfts != undefined && walletLinkedNfts.length > 0) {
     //fetch data in the first linkedNFT
     const mainNFT = walletLinkedNfts[0];
@@ -83,9 +84,11 @@ async function updateResultToMainLinkedNFTInWallet(
     const filteredResult = result.filter((data) => {
       data.name == name && data.url == url;
     });
+    console.log(filteredResult);
     //main nft does not contain the same metadata
     if (filteredResult.length == 0) {
-      await addOrUpdateDataInLinkedNft(name, url, mainNFT);
+      const ix = await addOrUpdateDataInLinkedNft(name, url, mainNFT);
+      console.log(ix);
     } else {
       //just update the centralised db instead
       const docRef = doc(db, "mint", mainNFT.toString());
